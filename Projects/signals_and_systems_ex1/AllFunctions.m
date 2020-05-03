@@ -5,8 +5,8 @@ classdef AllFunctions
                 middle = round((start_point+end_point)/2,1);
                 a = ones(1,(abs(start_point)+abs(end_point)));
                 b=zeros(1,N);
-                % now we need to chack all the options.
-                if (middle==0)   %Chack if winodw is symetric
+                % now we need to check all the options.
+                if (middle==0)   %Check if winodw is symetric
                     the_value_of_b = round(N/2, 0 );
                     b(the_value_of_b) = 1;
                 else
