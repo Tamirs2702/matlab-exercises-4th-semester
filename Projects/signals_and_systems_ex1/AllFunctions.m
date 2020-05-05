@@ -5,8 +5,8 @@ classdef AllFunctions
                 middle = round((start_point+end_point)/2,1);
                 a = ones(1,(abs(start_point)+abs(end_point)));
                 b=zeros(1,N);
-                % now we need to chack all the options.
-                if (middle==0)   %Chack if winodw is symetric
+                % now we need to check all the options.
+                if (middle==0)   %Checks if winodw is symetric
                     the_value_of_b = round(N/2, 0 );
                     b(the_value_of_b) = 1;
                 else
@@ -19,26 +19,40 @@ classdef AllFunctions
                     end
                 end
                 an=conv(b,a,'same');
-                plot(time_vector,real(an))
+                    hold on
+                    grid on
+                    grid minor
+                    plot(time_vector,real(an)); %plotting
+                    hold off
             end
             
             function ak = calculate_coefficient_vector(an, time_vector , freq_vector) %Calculate the coefficient vector of the function an
                 N = length(time_vector);
                 w = 2*pi/N;
-                exponent = exp(-1j*w*freq_vector.'*time_vector);
-                ak = (exponent*an.').*(1/N);
-                plot(freq_vector,real(ak))
+                exponent = exp(-1j*w.*(time _vector')*freq_vector);                 
+                ak = (1/N)*(an*exponent);
+             hold on
+            grid on
+            grid minor
+            plot(time_vector,real(ak)); %plotting of real part of ak.
+            hold off
+
+               
             end
             
             function an = calculate_an_vector(ak, time_vector , freq_vector) %Calculate the coefficient vector of the function an
-                N = length(time_vector);
+               N = length(freq_vector);
                 w = 2*pi/N;
-                exponent = exp(1j*w*freq_vector.'*time_vector);
-                an = (exponent.'*ak).';
-                plot(time_vector,real(an));
+                exponent = exp(1j*w*time_vector'*freq_vector)';
+                if( length(time_vector) == length(freq_vector))
+                an = (ak*exponent);
+                else
+                an = ak((freq_vector(end)+1 - time_vector(end)):1:(freq_vector(end)+1 + time_vector(end)))*exponent.';
+                end
+                
+                grid on;
+                 plot(freq_vector,real(an));
             end
-            
-            
             function  symetric_bool = does_the_vector_symetric(vector)
                 symetric_bool = sum(vector - flip(vector))<eps;
             end
@@ -50,9 +64,10 @@ classdef AllFunctions
             end
             
             function bk = exp_multiplication(ak,value_to_mul,freq_vector)
-                bk = ak.*exp(1i*(-value_to_mul)*2*pi*(freq_vector.')/2001);
+                N = length(freq_vector);
+                w = 2*pi/N;
+                bk = ak.*exp(1j*freq_vector*w*(-value_to_mul));
             end
-            % bn = calculate_an_vector(bk, n , freq_vector);
             
             function ck = k_multiplication(ak,k_to_mul)
                 ck  =(ak).*k_to_mul;
@@ -75,7 +90,7 @@ classdef AllFunctions
             
             function fk = zero_padding(original_array, padding_length)
                 fk = zeros(1,padding_length*length(original_array));
-                fk([1:padding_length:end])=(original_array.');
+                fk([1:padding_length:end])=(original_array);
             end
             
             function aM = fourier_approx(ak, time_vector , iterations)
@@ -87,7 +102,9 @@ classdef AllFunctions
                 end
                 plot(time_vector,real(aM))
             end
-            
-            
+           
      end
+ 
 end
+
+
