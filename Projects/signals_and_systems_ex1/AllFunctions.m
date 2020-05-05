@@ -6,7 +6,7 @@ classdef AllFunctions
                 a = ones(1,(abs(start_point)+abs(end_point)));
                 b=zeros(1,N);
                 % now we need to check all the options.
-                if (middle==0)   %Checks if winodw is symetric
+                if (middle==0)   %Check if winodw is symetric
                     the_value_of_b = round(N/2, 0 );
                     b(the_value_of_b) = 1;
                 else
@@ -29,7 +29,7 @@ classdef AllFunctions
             function ak = calculate_coefficient_vector(an, time_vector , freq_vector) %Calculate the coefficient vector of the function an
                 N = length(time_vector);
                 w = 2*pi/N;
-                exponent = exp(-1j*w.*(time _vector')*freq_vector);                 
+                exponent = exp(-1j*w.*(time_vector')*freq_vector);                 
                 ak = (1/N)*(an*exponent);
              hold on
             grid on
@@ -40,19 +40,24 @@ classdef AllFunctions
                
             end
             
+                 
             function an = calculate_an_vector(ak, time_vector , freq_vector) %Calculate the coefficient vector of the function an
                N = length(freq_vector);
                 w = 2*pi/N;
                 exponent = exp(1j*w*time_vector'*freq_vector)';
-                if( length(time_vector) == length(freq_vector))
+                if((length(time_vector) == length(freq_vector)))
                 an = (ak*exponent);
-                else
-                an = ak((freq_vector(end)+1 - time_vector(end)):1:(freq_vector(end)+1 + time_vector(end)))*exponent.';
                 end
-                
+                if(size(ak,2) == size(exponent,2))
+                     an = (ak*exponent.');
+                elseif (length(time_vector) < N)
+                an = ak(round(freq_vector(end)+1 - time_vector(end)):1:round(freq_vector(end)+1 + time_vector(end)))*exponent.';
+                end 
+               
                 grid on;
                  plot(freq_vector,real(an));
             end
+                
             function  symetric_bool = does_the_vector_symetric(vector)
                 symetric_bool = sum(vector - flip(vector))<eps;
             end
