@@ -2,5 +2,22 @@ A homework assignment given to me in the course "Signals and Systems".
 The entire code is structured in a way that no part of it is "hard coded", meaning that you can change the values and get different results.
 The default code (if compiled without changing anything) includes the data we need in the homework.
 
+
+1. Calculate window function
+2. Calculation of Fourier transforms and calculation of the inverse Fourier transform
+3. Prove the relationship between time and frequency symmetries
+4. Analytical calculation - Fourier transform
+5. Proof of identity: Sliding in time equals multiplication in frequency
+6. Proof of Identity: A derivative in the time domain equals a multiplication of K in the frequency domain
+7. Proof of identity: Time convolution equals multiplication in frequency
+8. Proof and Graphic Presentation of the Parseval's identity
+9. Proof of Identity: Multiply in time equals Frequency Convolution
+10. Multiplying cosine by the time plane
+11. Zero padding and frequency amplitude change ->  then transfer to the time plane.
+12. Gibbs phenomena, graphic presentation
+13. Hilbert filter
+
+
+
 All rights reserved
-Amit Shmueli
+Amit Shmueli ,  Ofek Aharony
