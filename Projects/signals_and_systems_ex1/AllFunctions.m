@@ -25,7 +25,7 @@ classdef AllFunctions
                     plot(time_vector,real(an)); %plotting
                     hold off
             end
-            
+%                function ak =fourier_coefficients_discrete_time(an, time_vector , freq_vector)
             function ak = calculate_coefficient_vector(an, time_vector , freq_vector) %Calculate the coefficient vector of the function an
                 N = length(time_vector);
                 w = 2*pi/N;
@@ -40,7 +40,7 @@ classdef AllFunctions
                
             end
             
-                 
+%             function an =inverse_fourier_coefficients_discrete_time(ak, time_vector , freq_vector)
             function an = calculate_an_vector(ak, time_vector , freq_vector) %Calculate the coefficient vector of the function an
                N = length(freq_vector);
                 w = 2*pi/N;
@@ -71,7 +71,7 @@ classdef AllFunctions
             function bk = exp_multiplication(ak,value_to_mul,freq_vector)
                 N = length(freq_vector);
                 w = 2*pi/N;
-                bk = ak.*exp(1j*freq_vector*w*(-value_to_mul));
+                bk = ak.*exp(-1j*freq_vector*w*(-value_to_mul));
             end
             
             function ck = k_multiplication(ak,k_to_mul)
@@ -107,7 +107,14 @@ classdef AllFunctions
                 end
                 plot(time_vector,real(aM))
             end
-           
+            function hk = Hilbert (gk)
+                   N = length(gk);
+                   h1 = 1i.*ones(1,(N-1)/2);
+                   h2 = -1i.*ones(1,(N-1)/2);
+                   h3 = [h1 , 1i , h2];
+                   hk = (h3.*gk);
+            end
+            
      end
  
 end

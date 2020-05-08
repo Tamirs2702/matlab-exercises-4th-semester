@@ -1,6 +1,6 @@
 %% Default values - by homework file
 % All values are changeable
-clear ;  close all; clc;
+clear ;  close all;
 n = -1000:1:1000;   % time domain - by defult
 k = -1000:1:1000;  %Frequency domain - by defult
 N = length(k);
@@ -10,8 +10,6 @@ step_start = -100;
 step_end = 100;
 amplitude = 0.2;
 set(0,'DefaultFigureWindowStyle','docked')
-
-
 %% Q1 Create the Signal 'a(n)'
 figure(1)
 an = AllFunctions.calculate_window_function(step_start,step_end, n) ;  % Using convolution
@@ -84,35 +82,28 @@ bk = AllFunctions.exp_multiplication(ak,150,k);
 bn = AllFunctions.calculate_an_vector(bk, n , k);
 hold on;
 grid on;grid minor;
-xlabel('time');
-ylabel('amplitude');
 title(' b[n] compare to a[n] ');
 plot(k,real(an)); %plotting of an..
 legend('b[n] - shift of 150 unit time of a[n]' , ' a[n]');
 hold off
 title('Time Shift');
-
+xlabel('time');
+ylabel('amplitude');
 
 
 
 %% Q6 
+
 figure(6)
 k_to_mul = (1-exp(-1i*k*w));
 ck = AllFunctions.k_multiplication(ak,k_to_mul) ;
 cn = AllFunctions.calculate_an_vector(ck, n , k);
 grid on;grid minor;
-title('Window Function Derivative');
-xlabel('time');
-ylabel('amplitude');
-legend('C[n]');
 %% Q7
 figure(7)
+
 dk = AllFunctions.speical_mul(ak,k);
 hold on 
-title('Convolution in the space time');
-xlabel('time');
-ylabel('amplitude');
-legend('D[n]');
 dn = AllFunctions.calculate_an_vector(dk, n ,k);
 hold off
 %% Q8
@@ -127,14 +118,11 @@ figure(9)
 en   = (bn.*an);
 k_fix = 1:1:2001;  %% The convolution has no relative time. In order to display the functions on each other we needed to be fixed
 ek = AllFunctions.calculate_coefficient_vector(en, n , k_fix) ;
+
 fk = cconv(ak,bk,N);   %Cyclic convolution
 hold on
 plot(n,real(fk)); 
-title('Convolution in the frequency space');
-xlabel('k');
-ylabel('amplitude');
-legend('f[k] - by cyclic convolution' , ' e[k] = by multiply in time');
-
+legend('ek','fk');
 %% Q10
 figure(10)
 gn = an.*cos(2*pi*500*(n/N));
@@ -143,12 +131,8 @@ gk = AllFunctions.calculate_coefficient_vector(gn,n , k);
 hold on
 grid on;grid minor;
 plot(k,real(ak));
-title('The effect of multiply by cos');
-xlabel('k');
-ylabel('amplitude');
-legend('g[k] - a[k] multiply by cos' , ' a[k]');
+legend('gk','ak');
 hold off
-
 
 
 %% Q11   
@@ -160,10 +144,6 @@ fn = AllFunctions.calculate_an_vector(fk, m , k);%creating f[n] from the coeffic
 hold on
 grid on
 plot(k,an);
-title('Collapse in time');
-xlabel('time');
-ylabel('amplitude');
-legend('f[k] - The shrinking signal' , 'a[k] - the original signal');
 hold off
 
 
@@ -177,10 +157,10 @@ for time_index=700:50:1000 % creating the approximations of the signal and plott
     plot(k,real(aM)); %plotting of am.
 hold on
  end
-grid on;grid minor;
-title('Fourier approximation');
-xlabel('time');
-ylabel('amplitude');
+grid on
+grid minor
+xlabel('n')
+ylabel('a_m [n]')
 legend('M = 700','M = 750','M = 800','M = 850','M = 900','M = 950','M = 1000')
 hold off
 %% Q13
@@ -207,3 +187,4 @@ grid on;
 xlabel('time');
 ylabel('amplitude');
 legend('hSin[n]' , 'hHilbert[n]');
+    
